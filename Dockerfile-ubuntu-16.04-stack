@@ -1,0 +1,15 @@
+FROM ubuntu:16.04
+MAINTAINER ILJA TKACHUK <tkachuk.labs@gmail.com>
+
+RUN apt-get -yq update \
+  && apt-get -yq install wget git \
+  && wget -qO- https://get.haskellstack.org/ | sh \
+  && apt-get -yq install zlib1g-dev \
+  && stack setup \
+  && apt-get clean \
+  && rm -fr /var/lib/apt/lists/* /tmp/* /var/tmp/**
+
+ENV PATH=$HOME/.local/bin:$PATH
+
+WORKDIR /root
+CMD ["bash"]

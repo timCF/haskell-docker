@@ -1,0 +1,7 @@
+FROM tkachuklabs/ubuntu-16.04-stack:2019-01-04
+MAINTAINER ILJA TKACHUK <tkachuk.labs@gmail.com>
+
+RUN stack install keter --resolver lts-7.19
+
+WORKDIR /root
+CMD ["bash"]

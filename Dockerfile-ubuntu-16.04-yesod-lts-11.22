@@ -1,0 +1,8 @@
+FROM tkachuklabs/ubuntu-16.04-stack:2019-01-04
+MAINTAINER ILJA TKACHUK <tkachuk.labs@gmail.com>
+
+RUN stack install Cabal --resolver lts-11.22 \
+  && stack install yesod-bin --install-ghc --resolver lts-11.22
+
+WORKDIR /root
+CMD ["bash"]
