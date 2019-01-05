@@ -1,4 +1,4 @@
-FROM tkachuklabs/ubuntu-16.04-stack:2019-01-04
+FROM tkachuklabs/ubuntu-16.04-stack:2019-01-05
 MAINTAINER ILJA TKACHUK <tkachuk.labs@gmail.com>
 
 RUN stack install Cabal --resolver lts-11.22 \
