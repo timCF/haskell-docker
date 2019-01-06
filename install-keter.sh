@@ -9,24 +9,21 @@ if [ $# -ne 1 ]
 fi
 
 DESTINATION_IDENT="$1"
+BUILDER_IMAGE="tkachuklabs/ubuntu-16.04-keter-lts-7.19:2019-01-06"
+BUILDER_CONTAINER="$(cat /dev/urandom | base64 | tr -cd 'a-f0-9' | head -c 32)"
+WORK_DIR="$PWD/artifacts/$BUILDER_CONTAINER"
 
-BUILD_DATE="2019-01-04"
-DOCKERHUB_USER="tkachuklabs"
-KETER_IMAGE="ubuntu-16.04-keter-lts-7.19"
-KETER_TAG="$DOCKERHUB_USER/$KETER_IMAGE:$BUILD_DATE"
+mkdir -p "$WORK_DIR"
+docker pull "$BUILDER_IMAGE"
+docker create -ti --name "$BUILDER_CONTAINER" "$BUILDER_IMAGE" bash
+docker cp "$BUILDER_CONTAINER:/root/.local/bin/keter" "$WORK_DIR/keter"
+docker rm -fv "$BUILDER_CONTAINER"
 
-DUMMY_CONTAINER="$(cat /dev/urandom | base64 | tr -cd 'a-f0-9' | head -c 32)"
-
-docker pull "$KETER_TAG"
-mkdir -p ./artifacts
-docker create -ti --name "$DUMMY_CONTAINER" "$KETER_TAG" bash
-docker cp "$DUMMY_CONTAINER:/root/.local/bin/keter" ./artifacts/keter
-docker rm -fv "$DUMMY_CONTAINER"
-
-scp ./artifacts/keter "$DESTINATION_IDENT:~/"
-scp ./private/install-keter.sh "$DESTINATION_IDENT:~/"
+scp "$WORK_DIR/keter" "$DESTINATION_IDENT:~/"
+scp "$PWD/private/install-keter.sh" "$DESTINATION_IDENT:~/"
 ssh "$DESTINATION_IDENT" '~/install-keter.sh'
 ssh "$DESTINATION_IDENT" 'rm -rf ~/install-keter.sh'
 ssh "$DESTINATION_IDENT" 'rm -rf ~/keter'
+rm -rf "$WORK_DIR"
 
 echo "keter successfully installed to $DESTINATION_IDENT"
