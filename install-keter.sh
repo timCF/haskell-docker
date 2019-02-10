@@ -9,7 +9,8 @@ if [ $# -ne 1 ]
 fi
 
 DESTINATION_IDENT="$1"
-BUILDER_IMAGE="tkachuklabs/ubuntu-16.04-keter-lts-7.19:2019-01-06"
+# BUILDER_IMAGE="tkachuklabs/ubuntu-16.04-keter-lts-7.19:2019-01-06"
+BUILDER_IMAGE="tkachuklabs/ubuntu-16.04-keter-lts-12.20:2019-02-10"
 BUILDER_CONTAINER="$(cat /dev/urandom | base64 | tr -cd 'a-f0-9' | head -c 32)"
 WORK_DIR="$PWD/artifacts/$BUILDER_CONTAINER"
 

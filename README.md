@@ -1,5 +1,5 @@
 # haskell-tools
-Utilities for building and deploying **binary** native Linux distributions of Haskell programs.
+Utilities for building and deploying **binary** native Linux distributions of Haskell programs. Compiled Docker images of tools are available in https://cloud.docker.com/u/tkachuklabs/repository/list dockerhub repositories.
 
 <img src="private/logo.jpg" width="300"/>
 
